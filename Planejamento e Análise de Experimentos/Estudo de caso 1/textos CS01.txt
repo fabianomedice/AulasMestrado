@@ -1,0 +1,88 @@
+---
+title: 'Estudo de Caso 01: Performance de uma nova versão de software'
+author: "Autores: Danilo A. Caldeira Silva (Verificador), Fabiano Viana Oliveira da Cunha Médice (Monitor), Fabrício Teixeira Coura (Relator) e Guilherme Lopes de Figueiredo Brandão (Coordenador)"
+date: "24 de setembro de 2018"
+
+# Resumo
+
+Neste trabalho, é realizada a análise de um experimento para comparação de desempenho de uma nova versão de software em relação à versão atual, cujos parâmetros de custos de execução são conhecidos devido à larga experiência prévia. Para realização desta análise, utilizou-se como métricas de comparação a média e a variância do custo de execução do software, uma vez que estas características da versão atual já são conhecidas. O objetivo é verificar se a nova versão apresenta melhoria de performance em termos de custo médio de execução ou de redução da variância. As conclusões apresentadas são baseadas nos resultados estatísticos obtidos na realização de testes de hipóteses para a média e a variância.   
+
+# O Experimento
+
+O desempenho da versão atual de determinado software possui comportamento bem conhecido, levando-se em conta a larga experiência prévia, sendo representado por uma distribuição que apresenta média de $\mu = 50$ e uma variância  $\sigma^2 = 100$.
+
+Foi desenvolvida uma nova versão deste software e deseja-se investigar se esta versão apresenta melhorias de desempenho (por exemplo, menor custo médio de execução e/ou menor variância) em relação ao padrão atual. Para investigar essa questão em particular, uma análise experimental é realizada, através do teste de hipóteses.
+
+# Análise estatística sobre o desempenho do sistema
+
+A fim de se comparar a melhoria de desempenho da nova versão do software com o padrão atual, necessita-se verificar se o custo médio e a variância são menores que o anterior. Assim, utiliza-se o teste unilateral à esquerda, para conferir se há melhora do programa.
+
+Para obtenção do número de amostras, se utiliza como base os parâmetros do software padrão, ou seja, Média = 50 e Variância = 100.
+
+Assim, para Sigma^2 = 100, Alpha = 0.01, Beta = 0.2 e Gama = 4, o tamanho da amostra é:
+
+n = (Zalpha + Zbeta)^2*Sigma^2/Gama^2 = 63 amostras.
+
+Com um nível de significância de 1%, utiliza-se o teste t para comparar as médias. Assim, para fazer o teste t unilateral à esquerda, têm-se as hipóteses:
+
+H0: média = 50
+H1: média < 50
+
+Então, aplicando-se o teste t unilateral à esquerda, têm-se:
+
+One Sample t-test
+
+data:  Samples
+t = -1.5507, df = 62, p-value = 0.06303
+alternative hypothesis: true mean is less than 50
+99 percent confidence interval:
+     -Inf 50.50046
+sample estimates:
+mean of x 
+  49.0731
+
+Sendo o valor-p maior que 0.01, ou o valor t ser maior que -2.326348, falhou-se em rejeitar a hipótese nula. Logo, as médias são estatisticamente as mesmas, não obtendo assim uma melhora por média de custos.
+
+Pelo fato do tamanho da amostra ser maior que 40, não é necessário fazer o teste de normalidade (Shapiro-Wilk), porém ao fazer o teste o seu resultado foi:
+
+Shapiro-Wilk normality test
+
+data:  Samples
+W = 0.98894, p-value = 0.8452
+
+Como o valor-p é maior que 0.01, os dados são normais.
+
+Com um nível de significância de 5%, utiliza-se o teste qui quadrado para comparar as variâncias. Assim, para fazer o teste qui quadrado unilateral à esquerda, têm-se as hipóteses:
+
+H0: variancia = 100
+H1: variancia < 100
+
+Então, aplicando-se o teste qui quadrado unilateral à esquerda para (63-1) graus de liberdade, têm-se:
+
+Chi(1-0.05,63-1) = 81.38102
+
+Para se rejeitar a hipótese nula, o valor calculado deve ser menor que o valor da tabela. Assim, para Graus de liberdade = (63-1) , VarianciaAmostral = 22.50804 e Variancia = 100, têm-se:
+
+Chi(0)=(63-1)*22.50804/100 = 13.95498
+
+Pelo valor encontrado, se rejeitou a hipótese nula. Sendo assim, as variâncias não são estatisticamente as mesmas, obtendo assim uma melhora por variância.
+
+O intervalo de confiança é:
+
+[-Inf , Graus de liberdade * VarianciaAmostral^2/QuiQuadrado (0.05,63-1)]
+-Inf 31.08774
+
+Por a amostra ser grande, não é necessário fazer o teste de normalidade, porém como os dados são os mesmos do teste de média, o teste de Shapiro-Wilk confirmou a normalidade.
+
+# Conclusão
+
+O resultado do teste t entre a média das amostras e a média do programa original foi de t = -1.5507 e p-value = 0.06303. Como o valor-p é maior que 0.01, ou como o valor t é maior que -2.326348, falhou-se em rejeitar a hipótese nula. Assim, através do resultado do teste t, não houve variação entre a média do novo programa com a média do programa original. 
+
+O resultado do teste qui quadrado entre a variância das amostras e a variância do programa original foi de Chi(0.05,63-1) = 81.38102 para o limite do intervalo à esquerda e Chi(0) = 13.95498 para o valor do novo programa. Por o valor calculado ser menor que o valor da tabela, se rejeita a hipótese nula. Assim, através do resultado do teste qui quadrado, as variâncias não são estatisticamente as mesmas, obtendo assim uma melhora por variância.
+
+Através dos resultados obtidos pelos testes estatísticos, têm-se:
+
+Média = 49.0731 [-Inf,50.50046]
+Variância = 22.50804 [-Inf, 31.08774]
+
+Comparado com a média = 50 e variância = 100, o novo programa apresenta uma melhora de desempenho, por conta que a variância dos resultados será menor que a variância do programa padrão anterior.
